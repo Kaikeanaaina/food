@@ -21,13 +21,13 @@ const SearchScreen = () => {
     // when you request yelp.get, you have to pass in params
     // it will add to the url
     // so limit: 50 would look like, '/search?limit=50'
-    const searchApi = async () => {
+    const searchApi = async (searchTerm) => {
         try {
-
+        // try is for the error handling
             const response = await yelp.get('/search', {
                 params: {
                     limit: 50,
-                    term,
+                    term: searchTerm,
                     location: 'san jose'
                     // location is hardcoded
                 }
@@ -39,13 +39,18 @@ const SearchScreen = () => {
         }
     }
 
+    // call searchApi when component
+    // is first rendered BAD CODE!!!
+    // searchApi('pasta')
+    // this will cause us to go into an infinite looop
+
     return (
         <View>
             <SearchBar
                 term={term}
                 onTermChange={setTerm}
                 // onTermChange={newTerm => setTerm(newTerm)}
-                onTermSubmit={searchApi}
+                onTermSubmit={() => searchApi(term)}
             // onTermSubmit={() => searchApi()}
             />
             {errorMessage ? <Text>{errorMessage}</Text> : null}
