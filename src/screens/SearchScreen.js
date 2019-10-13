@@ -6,9 +6,10 @@ import yelp from '../api/yelp';
 const SearchScreen = () => {
     const [term, setTerm] = useState('');
     // this is how we make a new state
-    const [results, setResults] = useState([])
+    const [results, setResults] = useState([]);
     // we could write it out as
     // const [businesses, setBusiness] = useState([]), or restaurants, 
+    const [errorMessage, setErrorMessage] = useState('');
 
     // putting the async allows us to use the await syntax
     // we are waiting for some response to come back
@@ -16,21 +17,26 @@ const SearchScreen = () => {
     // the axios response will be a .data on it
     // we are going to set the new state to the response.data.business, 
     // which are the list of businesses we get in the response
-    
+
     // when you request yelp.get, you have to pass in params
     // it will add to the url
     // so limit: 50 would look like, '/search?limit=50'
     const searchApi = async () => {
-        const response = await yelp.get('/search', {
-            params: {
-                limit: 50,
-                term,
-                location: 'san jose'
-                // location is hardcoded
-            }
-        })
-        // this is how you set the state
-        setResults(response.data.businesses);
+        try {
+
+            const response = await yelp.get('/search', {
+                params: {
+                    limit: 50,
+                    term,
+                    location: 'san jose'
+                    // location is hardcoded
+                }
+            })
+            // this is how you set the state
+            setResults(response.data.businesses);
+        } catch (err) {
+            setErrorMessage('Something went wrong')
+        }
     }
 
     return (
@@ -40,9 +46,9 @@ const SearchScreen = () => {
                 onTermChange={setTerm}
                 // onTermChange={newTerm => setTerm(newTerm)}
                 onTermSubmit={searchApi}
-                // onTermSubmit={() => searchApi()}
+            // onTermSubmit={() => searchApi()}
             />
-            <Text>Search Screen</Text>
+            {errorMessage ? <Text>{errorMessage}</Text> : null}
             <Text>We have found {results.length} results</Text>
         </View>
     )
