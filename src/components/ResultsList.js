@@ -1,8 +1,8 @@
 import React from 'react'
 import { View, Text, StyleSheet, FlatList } from 'react-native'
+import ResultsDetail from './ResultsDetail'
 
 const ResultsList = ({ title, results }) => {
-    console.log(results)
     return (
         <View>
             <Text style={styles.title}>{title}</Text>
@@ -11,7 +11,7 @@ const ResultsList = ({ title, results }) => {
                 data={results}
                 keyExtractor={result => result.id} //pick something from the data where it won't change after rerendered
                 renderItem={({ item }) => {   //item is each individual item from the array of data
-                    return <Text>{item.name}</Text>
+                    return <ResultsDetail result={item} />
                 }}
             />
 
