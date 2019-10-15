@@ -1,11 +1,12 @@
 import React from 'react'
-import { View, Text, StyleSheet, Flatlist } from 'react-native'
+import { View, Text, StyleSheet, FlatList } from 'react-native'
 
 const ResultsList = ({ title, results }) => {
+    console.log(results)
     return (
         <View>
             <Text style={styles.title}>{title}</Text>
-            <Flatlist
+            <FlatList
                 horizontal //this is same as horizontal={true}
                 data={results}
                 keyExtractor={result => result.id} //pick something from the data where it won't change after rerendered
@@ -13,6 +14,7 @@ const ResultsList = ({ title, results }) => {
                     return <Text>{item.name}</Text>
                 }}
             />
+
         </View>
     )
 }
