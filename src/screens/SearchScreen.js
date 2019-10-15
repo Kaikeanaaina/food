@@ -21,7 +21,11 @@ const SearchScreen = () => {
 
     return (
         // use flex: 1 to the most parent view, so it call fill the screen
-        <View style={{ flex:1 }}>
+        // or
+        // take out the view tag, and only leave it as <>
+        // it will act as a placeholder, not render an element on the screen
+        // it will still render the children
+        <>
             <SearchBar
                 term={term}
                 onTermChange={setTerm}
@@ -30,13 +34,13 @@ const SearchScreen = () => {
             // onTermSubmit={() => searchApi()}
             />
             {errorMessage ? <Text>{errorMessage}</Text> : null}
-            <Text>We have found {results.length} results</Text>
+
             <ScrollView>
                 <ResultsList results={filterResultsByPrice('$')} title="Cost Effective" />
                 <ResultsList results={filterResultsByPrice('$$')} title="Bit Pricier" />
                 <ResultsList results={filterResultsByPrice('$$$')} title="Big Spender" />
             </ScrollView>
-        </View>
+        </>
     )
 }
 
