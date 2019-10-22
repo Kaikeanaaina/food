@@ -4,6 +4,13 @@ import { withNavigation } from 'react-navigation'
 import ResultsDetail from './ResultsDetail'
 
 const ResultsList = ({ title, results, navigation }) => {
+    // this is a checker
+    // if it doesn't load anything from the search
+    // the category won't render
+    if (!results.length) {
+        return null;
+    }
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>{title}</Text>
