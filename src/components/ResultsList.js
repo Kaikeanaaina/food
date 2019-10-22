@@ -13,8 +13,9 @@ const ResultsList = ({ title, results, navigation }) => {
                 data={results}
                 keyExtractor={result => result.id} //pick something from the data where it won't change after rerendered
                 renderItem={({ item }) => {   //item is each individual item from the array of data
+                    //passing in a 2nd argument to give information while navigating to the next screen
                     return (
-                        <TouchableOpacity onPress={() => navigation.navigate('ResultsShow')}>
+                        <TouchableOpacity onPress={() => navigation.navigate('ResultsShow',{ id: item.id})}>
                             <ResultsDetail result={item} />
                         </TouchableOpacity>
                     )
