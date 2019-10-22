@@ -1,8 +1,9 @@
 import React from 'react'
-import { View, Text, StyleSheet, FlatList } from 'react-native'
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
+import { withNavigation } from 'react-navigation'
 import ResultsDetail from './ResultsDetail'
 
-const ResultsList = ({ title, results }) => {
+const ResultsList = ({ title, results, navigation }) => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>{title}</Text>
@@ -12,7 +13,11 @@ const ResultsList = ({ title, results }) => {
                 data={results}
                 keyExtractor={result => result.id} //pick something from the data where it won't change after rerendered
                 renderItem={({ item }) => {   //item is each individual item from the array of data
-                    return <ResultsDetail result={item} />
+                    return (
+                        <TouchableOpacity onPress={() => navigation.navigate('ResultsShow')}>
+                            <ResultsDetail result={item} />
+                        </TouchableOpacity>
+                    )
                 }}
             />
 
@@ -32,4 +37,7 @@ const styles = StyleSheet.create({
     }
 })
 
-export default ResultsList
+// WithNavigation will allow the Navigation prop to be directly accessible to a child component
+// skipping any components in the between this component and the parent
+// injecting the navigation prop to components that will actually use it
+export default withNavigation(ResultsList)
